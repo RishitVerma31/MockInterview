@@ -82,7 +82,7 @@ export default function NewInterview() {
 
           {step === 1 && (
             <div style={{ animation:'slideUp 0.35s ease' }}>
-              <h2 style={s.stepTitle}>What role are you interviewing for?</h2>
+              <h2 className="step-title" style={s.stepTitle}>What role are you interviewing for?</h2>
               <div style={s.chipGrid}>
                 {ROLES.map(r => <Chip key={r} label={r} active={role===r} onClick={() => { setRole(r); setCustomRole(''); }} />)}
                 <Chip label="✏️ Custom" active={role==='custom'} onClick={() => setRole('custom')} />
@@ -95,7 +95,7 @@ export default function NewInterview() {
 
           {step === 2 && (
             <div style={{ animation:'slideUp 0.35s ease' }}>
-              <h2 style={s.stepTitle}>What's your experience level?</h2>
+              <h2 className="step-title" style={s.stepTitle}>What's your experience level?</h2>
               <div style={s.levelGrid}>
                 {LEVELS.map(l => (
                   <div key={l.label} onClick={() => setLevel(l.label)}
@@ -119,7 +119,7 @@ export default function NewInterview() {
 
           {step === 3 && (
             <div style={{ animation:'slideUp 0.35s ease' }}>
-              <h2 style={s.stepTitle}>Select your tech stack <span style={{ fontSize:14, color:'var(--text3)', fontWeight:400 }}>({stack.length} selected)</span></h2>
+              <h2 className="step-title" style={s.stepTitle}>Select your tech stack <span style={{ fontSize:14, color:'var(--text3)', fontWeight:400 }}>({stack.length} selected)</span></h2>
               <div style={s.chipGrid}>
                 {STACKS.map(t => <Chip key={t} label={t} active={stack.includes(t)} onClick={() => toggleStack(t)} />)}
               </div>
@@ -178,6 +178,10 @@ export default function NewInterview() {
         @keyframes spinSlow{to{transform:rotate(360deg)}}
         @keyframes gradShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
         @keyframes spin{to{transform:rotate(360deg)}}
+        
+        @media (max-width: 768px) {
+          .step-title { font-size: 18px !important; }
+        }
       `}</style>
     </div>
   );
@@ -199,7 +203,7 @@ function Tag({ label, color }) {
 }
 
 const s = {
-  page: { minHeight:'calc(100vh - 68px)', padding:'40px 24px', position:'relative', zIndex:1 },
+  page: { minHeight:'calc(100vh - 68px)', padding:'24px 16px', position:'relative', zIndex:1 },
   container: { maxWidth:760, margin:'0 auto', display:'flex', flexDirection:'column', gap:32 },
   header: { textAlign:'center', display:'flex', flexDirection:'column', gap:10, alignItems:'center' },
   badge: { display:'inline-flex', background:'rgba(124,106,247,0.12)', border:'1px solid rgba(124,106,247,0.25)', borderRadius:20, padding:'5px 16px', fontSize:12, fontWeight:600, color:'var(--accent2)', letterSpacing:'0.5px', textTransform:'uppercase' },
@@ -207,10 +211,10 @@ const s = {
   titleGrad: { background:'linear-gradient(135deg,#a78bfa,#22d3ee)', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent' },
   sub: { fontSize:15, color:'var(--text2)', maxWidth:400 },
   steps: { display:'flex', alignItems:'center', justifyContent:'center', gap:0 },
-  panel: { position:'relative', background:'rgba(255,255,255,0.03)', border:'1px solid rgba(255,255,255,0.07)', borderRadius:24, padding:'32px', overflow:'hidden' },
+  panel: { position:'relative', background:'rgba(255,255,255,0.03)', border:'1px solid rgba(255,255,255,0.07)', borderRadius:24, padding:'24px 20px', overflow:'hidden' },
   stepTitle: { fontSize:20, fontWeight:700, color:'#fff', marginBottom:20 },
   chipGrid: { display:'flex', flexWrap:'wrap', gap:8 },
-  levelGrid: { display:'grid', gridTemplateColumns:'repeat(5,1fr)', gap:12 },
+  levelGrid: { display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(120px, 1fr))', gap:12 },
   input: { background:'rgba(255,255,255,0.04)', border:'1px solid rgba(255,255,255,0.08)', borderRadius:10, padding:'12px 16px', color:'#fff', fontSize:14, outline:'none', width:'100%', transition:'border-color 0.2s' },
   summary: { display:'flex', flexWrap:'wrap', gap:6, padding:'14px 16px', background:'rgba(124,106,247,0.05)', border:'1px solid rgba(124,106,247,0.12)', borderRadius:10, marginTop:20, alignItems:'center' },
   error: { background:'rgba(248,113,113,0.08)', border:'1px solid rgba(248,113,113,0.25)', borderRadius:8, padding:'10px 14px', color:'#fca5a5', fontSize:13, display:'flex', gap:8, marginTop:12 },

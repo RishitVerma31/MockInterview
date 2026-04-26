@@ -99,7 +99,7 @@ export default function InterviewReport() {
 
         {/* Overview */}
         {tab === 'overview' && report && (
-          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:16 }}>
+          <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(280px, 1fr))', gap:16 }}>
             <GlassCard title="✅ Top Strengths">
               {(report.topStrengths||[]).map((str,i) => (
                 <div key={i} style={{ display:'flex', gap:10, alignItems:'flex-start', fontSize:14, color:'var(--text2)', lineHeight:1.5 }}>
@@ -238,11 +238,11 @@ function Loader() {
 }
 
 const s = {
-  page: { minHeight:'calc(100vh - 68px)', padding:'40px 24px', position:'relative', zIndex:1 },
+  page: { minHeight:'calc(100vh - 68px)', padding:'24px 16px', position:'relative', zIndex:1 },
   container: { maxWidth:960, margin:'0 auto', display:'flex', flexDirection:'column', gap:24 },
   title: { fontSize:32, fontWeight:900, color:'#fff', letterSpacing:'-0.5px' },
   grad: { background:'linear-gradient(135deg,#a78bfa,#22d3ee)', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent' },
   newBtn: { position:'relative', display:'inline-flex', alignItems:'center', background:'transparent', border:'none', borderRadius:12, padding:'11px 22px', fontSize:14, fontWeight:600, color:'#fff', textDecoration:'none', overflow:'hidden', flexShrink:0, boxShadow:'0 8px 24px rgba(124,106,247,0.25)', transition:'all 0.2s' },
   newBtnBg: { position:'absolute', inset:0, background:'linear-gradient(135deg,#7c6af7,#5b4fd4,#7c6af7)', backgroundSize:'200% 100%', animation:'gradShift 3s ease infinite' },
-  hero: { position:'relative', background:'rgba(255,255,255,0.03)', border:'1px solid rgba(255,255,255,0.07)', borderRadius:24, padding:'32px 36px', display:'flex', gap:32, alignItems:'center', flexWrap:'wrap', overflow:'hidden' },
+  hero: { position:'relative', background:'rgba(255,255,255,0.03)', border:'1px solid rgba(255,255,255,0.07)', borderRadius:24, padding:'24px', display:'flex', gap:24, alignItems:'center', flexWrap:'wrap', overflow:'hidden' },
 };

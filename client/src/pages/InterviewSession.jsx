@@ -196,9 +196,9 @@ export default function InterviewSession() {
         </div>
 
         {/* Main grid */}
-        <div style={s.mainGrid}>
+        <div className="main-grid" style={s.mainGrid}>
           {/* Left — webcam */}
-          <div style={s.leftCol}>
+          <div className="left-col" style={s.leftCol}>
             <div style={s.videoWrap}>
               <video ref={videoRef} autoPlay muted playsInline style={s.video} />
               <div style={s.videoOverlay}><div style={s.recDot} /><span style={s.recText}>LIVE</span></div>
@@ -305,6 +305,11 @@ export default function InterviewSession() {
         @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
         @keyframes micPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.3)}}
         @keyframes slideDown{from{transform:translateY(-100%);opacity:0}to{transform:translateY(0);opacity:1}}
+        
+        @media (min-width: 769px) {
+          .main-grid { grid-template-columns: 300px 1fr !important; }
+          .left-col { position: sticky !important; top: 80px !important; }
+        }
       `}</style>
     </div>
   );
@@ -384,8 +389,8 @@ const s = {
   progressText: { fontSize: 13, color: 'var(--text-secondary)' },
   progressBar: { width: 160, height: 6, background: 'var(--border)', borderRadius: 3, overflow: 'hidden' },
   progressFill: { height: '100%', background: 'var(--accent)', borderRadius: 3, transition: 'width 0.3s' },
-  mainGrid: { display: 'grid', gridTemplateColumns: '300px 1fr', gap: 20, alignItems: 'start' },
-  leftCol: { display: 'flex', flexDirection: 'column', gap: 12, position: 'sticky', top: 80 },
+  mainGrid: { display: 'grid', gridTemplateColumns: '1fr', gap: 20, alignItems: 'start' },
+  leftCol: { display: 'flex', flexDirection: 'column', gap: 12 },
   videoWrap: { position: 'relative', width: '100%', aspectRatio: '4/3', background: '#0a0a0f', borderRadius: 'var(--radius)', overflow: 'hidden', border: '2px solid var(--accent)' },
   video: { width: '100%', height: '100%', objectFit: 'cover', transform: 'scaleX(-1)', display: 'block' },
   videoOverlay: { position: 'absolute', top: 10, left: 10, display: 'flex', alignItems: 'center', gap: 6, background: 'rgba(0,0,0,0.6)', padding: '4px 10px', borderRadius: 20 },

@@ -77,7 +77,7 @@ export default function Dashboard() {
             </div>
 
             {/* 3D floating card */}
-            <div style={s.heroCard}
+            <div className="hero-card" style={s.heroCard}
               onMouseEnter={e => { e.currentTarget.style.transform = 'perspective(800px) rotateY(-8deg) rotateX(4deg) translateY(-8px)'; e.currentTarget.style.boxShadow = '0 32px 80px rgba(0,0,0,0.6), 0 0 60px rgba(124,106,247,0.2)'; }}
               onMouseLeave={e => { e.currentTarget.style.transform = 'perspective(800px) rotateY(-4deg) rotateX(2deg)'; e.currentTarget.style.boxShadow = '0 20px 60px rgba(0,0,0,0.4), 0 0 40px rgba(124,106,247,0.1)'; }}>
               <div style={s.heroCardGlow} />
@@ -149,6 +149,10 @@ export default function Dashboard() {
         @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
         @keyframes gradShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
         @keyframes glow{0%,100%{box-shadow:0 0 20px rgba(124,106,247,0.3)}50%{box-shadow:0 0 50px rgba(124,106,247,0.6)}}
+        
+        @media (max-width: 768px) {
+          .hero-card { display: none !important; }
+        }
       `}</style>
     </div>
   );
@@ -216,10 +220,10 @@ function EmptyState() {
 }
 
 const s = {
-  page: { minHeight: 'calc(100vh - 68px)', padding: '32px 24px', position: 'relative', zIndex: 1 },
+  page: { minHeight: 'calc(100vh - 68px)', padding: '32px 16px', position: 'relative', zIndex: 1 },
   container: { maxWidth: 1100, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 24 },
-  hero: { position: 'relative', borderRadius: 28, overflow: 'hidden', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', padding: '44px 52px', transition: 'background-position 0.1s ease' },
-  heroInner: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 40, position: 'relative', zIndex: 1 },
+  hero: { position: 'relative', borderRadius: 28, overflow: 'hidden', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', padding: '32px 24px', transition: 'background-position 0.1s ease' },
+  heroInner: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24, position: 'relative', zIndex: 1, flexWrap: 'wrap' },
   heroLeft: { display: 'flex', flexDirection: 'column', gap: 16 },
   greetBadge: { display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 20, padding: '5px 14px', fontSize: 13, color: 'var(--text2)', fontWeight: 500, alignSelf: 'flex-start' },
   heroTitle: { fontSize: 42, fontWeight: 900, color: '#fff', lineHeight: 1.15, letterSpacing: '-1px' },
@@ -230,7 +234,7 @@ const s = {
   heroSecondary: { display: 'inline-flex', alignItems: 'center', gap: 6, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: '13px 22px', fontSize: 14, fontWeight: 500, color: 'var(--text2)', textDecoration: 'none', transition: 'all 0.2s' },
   heroCard: { width: 220, height: 240, background: 'rgba(124,106,247,0.08)', border: '1px solid rgba(124,106,247,0.25)', borderRadius: 24, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 4, backdropFilter: 'blur(12px)', transform: 'perspective(800px) rotateY(-4deg) rotateX(2deg)', boxShadow: '0 20px 60px rgba(0,0,0,0.4), 0 0 40px rgba(124,106,247,0.1)', transition: 'all 0.3s ease', cursor: 'default', flexShrink: 0, position: 'relative', overflow: 'hidden' },
   heroCardGlow: { position: 'absolute', top: 0, left: '10%', right: '10%', height: 1, background: 'linear-gradient(90deg,transparent,rgba(124,106,247,0.8),transparent)' },
-  statsGrid: { display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 16 },
+  statsGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 16 },
   tip: { position: 'relative', background: 'rgba(124,106,247,0.05)', border: '1px solid rgba(124,106,247,0.15)', borderRadius: 16, padding: '18px 22px', display: 'flex', gap: 14, alignItems: 'flex-start', overflow: 'hidden', transition: 'all 0.2s ease', cursor: 'default' },
   tipGlow: { position: 'absolute', top: 0, left: '15%', right: '15%', height: 1, background: 'linear-gradient(90deg,transparent,rgba(124,106,247,0.6),transparent)' },
 };

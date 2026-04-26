@@ -118,7 +118,7 @@ function HistCard({ iv, delay }) {
 }
 
 const s = {
-  page: { minHeight:'calc(100vh - 68px)', padding:'40px 24px', position:'relative', zIndex:1 },
+  page: { minHeight:'calc(100vh - 68px)', padding:'24px 16px', position:'relative', zIndex:1 },
   container: { maxWidth:1100, margin:'0 auto', display:'flex', flexDirection:'column', gap:28 },
   header: { display:'flex', justifyContent:'space-between', alignItems:'flex-start', flexWrap:'wrap', gap:16 },
   badge: { display:'inline-flex', background:'rgba(124,106,247,0.12)', border:'1px solid rgba(124,106,247,0.25)', borderRadius:20, padding:'4px 14px', fontSize:12, fontWeight:600, color:'var(--accent2)', letterSpacing:'0.5px', textTransform:'uppercase', marginBottom:8 },
@@ -128,5 +128,5 @@ const s = {
   newBtn: { position:'relative', display:'inline-flex', alignItems:'center', background:'transparent', border:'none', borderRadius:12, padding:'12px 24px', fontSize:14, fontWeight:600, color:'#fff', textDecoration:'none', overflow:'hidden', flexShrink:0, boxShadow:'0 8px 24px rgba(124,106,247,0.25)', transition:'all 0.2s' },
   newBtnBg: { position:'absolute', inset:0, background:'linear-gradient(135deg,#7c6af7,#5b4fd4,#7c6af7)', backgroundSize:'200% 100%', animation:'gradShift 3s ease infinite' },
   filters: { display:'flex', gap:8, flexWrap:'wrap' },
-  grid: { display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(300px,1fr))', gap:16 },
+  grid: { display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(280px,1fr))', gap:16 },
 };

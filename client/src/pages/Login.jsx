@@ -63,9 +63,9 @@ export default function Login() {
       <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', width: 700, height: 700, borderRadius: '50%', border: '1px solid rgba(124,106,247,0.04)', animation: 'spinSlow 30s linear infinite', pointerEvents: 'none' }} />
       <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', width: 500, height: 500, borderRadius: '50%', border: '1px solid rgba(34,211,238,0.04)', animation: 'spinSlow 20s linear infinite reverse', pointerEvents: 'none' }} />
 
-      <div style={s.layout}>
+      <div className="login-layout" style={s.layout}>
         {/* Left */}
-        <div style={s.left}>
+        <div className="login-left" style={s.left}>
           <div style={s.leftInner}>
             <div style={s.logoWrap}>
               <div style={s.logoBox}>
@@ -115,7 +115,7 @@ export default function Login() {
 
         {/* Right — card */}
         <div style={s.right}>
-          <div ref={cardRef} onMouseMove={handleCardMouseMove} onMouseLeave={handleCardMouseLeave} style={s.card}>
+          <div ref={cardRef} onMouseMove={handleCardMouseMove} onMouseLeave={handleCardMouseLeave} className="login-card" style={s.card}>
             {/* Animated border */}
             <div style={s.cardBorderGlow} />
             <div style={{ position: 'absolute', top: 0, left: '15%', right: '15%', height: 1, background: 'linear-gradient(90deg,transparent,rgba(124,106,247,0.9),rgba(34,211,238,0.6),transparent)' }} />
@@ -179,6 +179,14 @@ export default function Login() {
         @keyframes slideUp{from{transform:translateY(16px);opacity:0}to{transform:translateY(0);opacity:1}}
         @keyframes gradShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
         @keyframes spin{to{transform:rotate(360deg)}}
+        
+        @media (min-width: 769px) {
+          .login-layout { grid-template-columns: 1fr 1fr !important; gap: 60px !important; }
+        }
+        @media (max-width: 768px) {
+          .login-left { display: none !important; }
+          .login-card { max-width: 100% !important; }
+        }
       `}</style>
     </div>
   );
@@ -203,7 +211,7 @@ function Spinner() {
 const s = {
   page: { minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24, position: 'relative', overflow: 'hidden' },
   shape: { position: 'fixed', pointerEvents: 'none', backdropFilter: 'blur(2px)', border: '1px solid rgba(255,255,255,0.06)' },
-  layout: { display: 'grid', gridTemplateColumns: '1fr 1fr', maxWidth: 1040, width: '100%', gap: 60, alignItems: 'center', position: 'relative', zIndex: 1 },
+  layout: { display: 'grid', gridTemplateColumns: '1fr', maxWidth: 1040, width: '100%', gap: 40, alignItems: 'center', position: 'relative', zIndex: 1 },
   left: { display: 'flex', flexDirection: 'column' },
   leftInner: { display: 'flex', flexDirection: 'column', gap: 28 },
   logoWrap: { display: 'flex' },

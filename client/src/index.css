@@ -42,6 +42,39 @@ input, textarea, select { font-family: inherit; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: rgba(124,106,247,0.4); border-radius: 2px; }
 
+/* ── Mobile Responsive Utilities ───────────────────────────────── */
+@media (max-width: 768px) {
+  html, body { font-size: 14px; }
+  
+  .mobile-hide { display: none !important; }
+  .mobile-full-width { width: 100% !important; }
+  .mobile-stack { flex-direction: column !important; }
+  .mobile-center { text-align: center !important; }
+  .mobile-no-gap { gap: 0 !important; }
+  .mobile-small-gap { gap: 8px !important; }
+  .mobile-padding-sm { padding: 12px !important; }
+  .mobile-padding-md { padding: 16px !important; }
+  .mobile-margin-sm { margin: 8px !important; }
+  
+  /* Improve touch targets */
+  button, a, input, select, textarea {
+    min-height: 44px;
+  }
+  
+  /* Better spacing on mobile */
+  h1 { font-size: 28px !important; }
+  h2 { font-size: 22px !important; }
+  h3 { font-size: 18px !important; }
+}
+
+@media (max-width: 480px) {
+  html, body { font-size: 13px; }
+  
+  h1 { font-size: 24px !important; }
+  h2 { font-size: 20px !important; }
+  h3 { font-size: 16px !important; }
+}
+
 /* ── Keyframes ─────────────────────────────────────────────────── */
 @keyframes spin        { to { transform: rotate(360deg); } }
 @keyframes spinSlow    { to { transform: rotate(360deg); } }
