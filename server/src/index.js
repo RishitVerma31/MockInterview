@@ -10,21 +10,28 @@ const PORT = process.env.PORT || 5000;
 
 app.use(cors({
   origin: (origin, callback) => {
-    // Allow requests with no origin (server-to-server, curl)
     if (!origin) return callback(null, true);
 
     const allowed = [
-      process.env.CLIENT_URL,
       'http://localhost:5173',
       'http://localhost:3001',
-    ].filter(Boolean).map(u => u.replace(/\/$/, '')); // strip trailing slashes
+    ];
+
+    // Add CLIENT_URL from env if set
+    if (process.env.CLIENT_URL) {
+      allowed.push(process.env.CLIENT_URL.replace(/\/$/, ''));
+    }
 
     const clean = origin.replace(/\/$/, '');
 
-    if (allowed.includes(clean)) {
+    // Allow any vercel.app subdomain (covers preview + production deployments)
+    const isVercel = clean.endsWith('.vercel.app');
+    const isAllowed = isVercel || allowed.includes(clean);
+
+    if (isAllowed) {
       callback(null, true);
     } else {
-      console.log('CORS blocked origin:', origin, '| Allowed:', allowed);
+      console.log('CORS blocked:', clean, '| Allowed:', allowed);
       callback(new Error('Not allowed by CORS'));
     }
   },
