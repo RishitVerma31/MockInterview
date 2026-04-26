@@ -10,14 +10,21 @@ const PORT = process.env.PORT || 5000;
 
 app.use(cors({
   origin: (origin, callback) => {
+    // Allow requests with no origin (server-to-server, curl)
+    if (!origin) return callback(null, true);
+
     const allowed = [
       process.env.CLIENT_URL,
       'http://localhost:5173',
-    ].filter(Boolean);
-    // Allow requests with no origin (mobile apps, curl, etc.)
-    if (!origin || allowed.some(o => origin.startsWith(o))) {
+      'http://localhost:3001',
+    ].filter(Boolean).map(u => u.replace(/\/$/, '')); // strip trailing slashes
+
+    const clean = origin.replace(/\/$/, '');
+
+    if (allowed.includes(clean)) {
       callback(null, true);
     } else {
+      console.log('CORS blocked origin:', origin, '| Allowed:', allowed);
       callback(new Error('Not allowed by CORS'));
     }
   },
