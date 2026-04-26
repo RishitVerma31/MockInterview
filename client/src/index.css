@@ -1,0 +1,121 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #03030a;
+  --bg2: #080812;
+  --bg3: #0e0e1c;
+  --glass: rgba(255,255,255,0.03);
+  --glass-b: rgba(255,255,255,0.07);
+  --glass-h: rgba(255,255,255,0.06);
+  --accent: #7c6af7;
+  --accent2: #a78bfa;
+  --accent3: #c4b5fd;
+  --cyan: #22d3ee;
+  --cyan2: #67e8f9;
+  --green: #4ade80;
+  --orange: #fb923c;
+  --red: #f87171;
+  --pink: #f472b6;
+  --text: #f0f0fa;
+  --text2: #9090b8;
+  --text3: #50507a;
+  --border: rgba(255,255,255,0.06);
+  --border2: rgba(255,255,255,0.1);
+  --r: 14px; --r2: 20px; --r3: 28px;
+}
+
+html, body {
+  height: 100%;
+  font-family: 'Inter', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+#root { min-height: 100vh; display: flex; flex-direction: column; }
+a { color: var(--accent2); text-decoration: none; }
+button { cursor: pointer; font-family: inherit; }
+input, textarea, select { font-family: inherit; }
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(124,106,247,0.4); border-radius: 2px; }
+
+/* ── Keyframes ─────────────────────────────────────────────────── */
+@keyframes spin        { to { transform: rotate(360deg); } }
+@keyframes spinSlow    { to { transform: rotate(360deg); } }
+@keyframes pulse       { 0%,100%{opacity:1} 50%{opacity:0.35} }
+@keyframes float       { 0%,100%{transform:translateY(0) rotate(-1deg)} 50%{transform:translateY(-12px) rotate(1deg)} }
+@keyframes floatR      { 0%,100%{transform:translateY(0) rotate(1deg)} 50%{transform:translateY(-8px) rotate(-1deg)} }
+@keyframes glow        { 0%,100%{box-shadow:0 0 20px rgba(124,106,247,0.3)} 50%{box-shadow:0 0 50px rgba(124,106,247,0.7),0 0 80px rgba(124,106,247,0.3)} }
+@keyframes glowCyan    { 0%,100%{box-shadow:0 0 20px rgba(34,211,238,0.3)} 50%{box-shadow:0 0 50px rgba(34,211,238,0.6)} }
+@keyframes slideUp     { from{transform:translateY(24px);opacity:0} to{transform:translateY(0);opacity:1} }
+@keyframes slideDown   { from{transform:translateY(-20px);opacity:0} to{transform:translateY(0);opacity:1} }
+@keyframes slideLeft   { from{transform:translateX(24px);opacity:0} to{transform:translateX(0);opacity:1} }
+@keyframes fadeIn      { from{opacity:0} to{opacity:1} }
+@keyframes shimmer     { 0%{background-position:-200% 0} 100%{background-position:200% 0} }
+@keyframes borderSpin  { to{transform:rotate(360deg)} }
+@keyframes dotBounce   { 0%,80%,100%{transform:scale(0.6);opacity:0.4} 40%{transform:scale(1.1);opacity:1} }
+@keyframes particleUp  { 0%{transform:translateY(0) translateX(0) scale(1);opacity:0.8} 100%{transform:translateY(-120px) translateX(var(--dx,20px)) scale(0.3);opacity:0} }
+@keyframes orbDrift    { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(30px,-20px) scale(1.05)} 66%{transform:translate(-20px,15px) scale(0.97)} }
+@keyframes scanLine    { 0%{top:-2px} 100%{top:100%} }
+@keyframes typewriter  { from{width:0} to{width:100%} }
+@keyframes blink       { 0%,100%{opacity:1} 50%{opacity:0} }
+@keyframes cardHover3d { 0%{transform:perspective(800px) rotateX(0) rotateY(0)} }
+@keyframes ripple      { 0%{transform:scale(0);opacity:0.6} 100%{transform:scale(4);opacity:0} }
+@keyframes countUp     { from{transform:translateY(8px);opacity:0} to{transform:translateY(0);opacity:1} }
+@keyframes micPulse    { 0%,100%{transform:scale(1)} 50%{transform:scale(1.2)} }
+@keyframes alertSlide  { from{transform:translateY(-100%);opacity:0} to{transform:translateY(0);opacity:1} }
+@keyframes gradShift   { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+@keyframes neonFlicker { 0%,19%,21%,23%,25%,54%,56%,100%{opacity:1} 20%,24%,55%{opacity:0.6} }
+
+/* ── Utility classes ───────────────────────────────────────────── */
+.glass {
+  background: var(--glass);
+  border: 1px solid var(--glass-b);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+.card-3d {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transform-style: preserve-3d;
+}
+.card-3d:hover {
+  transform: perspective(800px) rotateX(-3deg) rotateY(3deg) translateY(-4px);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.6), 0 0 40px rgba(124,106,247,0.15);
+}
+
+.btn-glow:hover {
+  filter: brightness(1.15);
+  box-shadow: 0 8px 32px rgba(124,106,247,0.5) !important;
+  transform: translateY(-2px);
+}
+
+.hover-lift {
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-3px);
+  border-color: rgba(124,106,247,0.3) !important;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 20px rgba(124,106,247,0.1);
+}
+
+.chip-hover {
+  transition: all 0.18s ease;
+}
+.chip-hover:hover {
+  border-color: rgba(124,106,247,0.5) !important;
+  background: rgba(124,106,247,0.12) !important;
+  color: var(--accent3) !important;
+  transform: translateY(-1px);
+}
+
+.nav-link-hover {
+  transition: all 0.2s ease;
+}
+.nav-link-hover:hover {
+  color: #fff !important;
+  background: rgba(255,255,255,0.06) !important;
+}
