@@ -1,0 +1,68 @@
+╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║   🚨 FIREBASE FIX - 2 MINUTE SOLUTION                        ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+Your JSON has literal newlines that break parsing.
+Solution: Use 3 separate environment variables instead.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+STEP 1: Get Your Credentials (30 seconds)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Run this in your terminal:
+
+cd server
+npm run extract-credentials
+
+Copy the 3 values it shows you.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+STEP 2: Commit & Push Code (30 seconds)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+git add .
+git commit -m "Add support for individual Firebase env vars"
+git push origin main
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+STEP 3: Add to Render (1 minute)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Go to: https://dashboard.render.com
+2. Click your service → Environment tab
+3. Add these 3 NEW variables:
+
+   FIREBASE_PROJECT_ID       = (paste value from step 1)
+   FIREBASE_CLIENT_EMAIL     = (paste value from step 1)
+   FIREBASE_PRIVATE_KEY      = (paste value from step 1)
+
+4. Click "Save Changes"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+STEP 4: Wait & Test (2 minutes)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⏱️  Render will redeploy (2-3 min)
+🌐 Test: https://mock-interview-six-delta.vercel.app
+✅ Should work now!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+WHY THIS WORKS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+❌ Old way: 1 big JSON string with newlines = parsing errors
+✅ New way: 3 simple text variables = no parsing needed
+
+The code now tries individual variables FIRST, then falls back
+to the JSON method if needed.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+READY? START WITH STEP 1! ⬆️

@@ -41,31 +41,47 @@ function loadFirebaseCredentials() {
         
         // Count actual newlines
         const actualNewlines = (originalKey.match(/\n/g) || []).length;
-        // Count escaped \n patterns (shouldn't exist after JSON.parse, but check anyway)
-        const escapedNewlines = (originalKey.match(/\\n/g) || []).length;
         
         console.log(`🔍 Private key analysis:`);
         console.log(`   Actual newlines: ${actualNewlines}`);
-        console.log(`   Escaped \\n patterns: ${escapedNewlines}`);
         console.log(`   Total length: ${originalKey.length} chars`);
-        console.log(`   Starts with: ${originalKey.substring(0, 30)}...`);
-        console.log(`   Ends with: ...${originalKey.substring(originalKey.length - 30)}`);
         
-        // If we have escaped \n after JSON.parse, something is wrong with the JSON
-        // This shouldn't happen, but handle it just in case
-        if (escapedNewlines > 0 && actualNewlines === 0) {
-          console.log('🔧 Converting escaped \\n to actual newlines');
-          serviceAccount.private_key = originalKey.replace(/\\n/g, '\n');
-        }
-        
-        // Verify the key has the correct format
-        if (!serviceAccount.private_key.includes('\n')) {
-          console.error('❌ Private key has no newlines - this will fail!');
-          console.error('   The private key must have actual line breaks.');
-        } else if (!serviceAccount.private_key.startsWith('-----BEGIN PRIVATE KEY-----')) {
-          console.error('❌ Private key does not start with BEGIN marker');
-        } else if (!serviceAccount.private_key.includes('-----END PRIVATE KEY-----')) {
-          console.error('❌ Private key does not have END marker');
+        // Firebase requires the private key to be properly formatted with newlines
+        // The key should have ~27 newlines (one after BEGIN, one before END, and one every 64 chars)
+        if (actualNewlines < 10) {
+          console.log('🔧 Private key needs proper formatting - fixing...');
+          
+          // Extract the key content between BEGIN and END markers
+          const beginMarker = '-----BEGIN PRIVATE KEY-----';
+          const endMarker = '-----END PRIVATE KEY-----';
+          
+          let keyContent = originalKey;
+          
+          // Remove markers if present
+          if (keyContent.includes(beginMarker)) {
+            keyContent = keyContent.split(beginMarker)[1];
+          }
+          if (keyContent.includes(endMarker)) {
+            keyContent = keyContent.split(endMarker)[0];
+          }
+          
+          // Remove all existing newlines and whitespace from the key content
+          keyContent = keyContent.replace(/[\r\n\s]/g, '');
+          
+          // Split into 64-character lines (PEM format standard)
+          const lines = [];
+          for (let i = 0; i < keyContent.length; i += 64) {
+            lines.push(keyContent.substring(i, i + 64));
+          }
+          
+          // Reconstruct the properly formatted key
+          serviceAccount.private_key = 
+            beginMarker + '\n' +
+            lines.join('\n') + '\n' +
+            endMarker + '\n';
+          
+          const newNewlines = (serviceAccount.private_key.match(/\n/g) || []).length;
+          console.log(`✅ Reformatted private key: ${actualNewlines} → ${newNewlines} newlines`);
         } else {
           console.log('✅ Private key format looks correct');
         }
