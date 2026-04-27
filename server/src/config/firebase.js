@@ -33,11 +33,42 @@ function loadFirebaseCredentials() {
       // Parse the JSON first
       serviceAccount = JSON.parse(jsonString);
       
-      // CRITICAL: Convert escaped \n in private_key to actual newlines
-      // The JSON is valid but Firebase needs actual newline characters
+      // CRITICAL: Handle private_key newlines correctly
+      // After JSON.parse, \n in the JSON string becomes actual newlines
+      // But we need to verify the format is correct for Firebase
       if (serviceAccount.private_key && typeof serviceAccount.private_key === 'string') {
-        // Replace literal \n strings with actual newline characters
-        serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
+        const originalKey = serviceAccount.private_key;
+        
+        // Count actual newlines
+        const actualNewlines = (originalKey.match(/\n/g) || []).length;
+        // Count escaped \n patterns (shouldn't exist after JSON.parse, but check anyway)
+        const escapedNewlines = (originalKey.match(/\\n/g) || []).length;
+        
+        console.log(`🔍 Private key analysis:`);
+        console.log(`   Actual newlines: ${actualNewlines}`);
+        console.log(`   Escaped \\n patterns: ${escapedNewlines}`);
+        console.log(`   Total length: ${originalKey.length} chars`);
+        console.log(`   Starts with: ${originalKey.substring(0, 30)}...`);
+        console.log(`   Ends with: ...${originalKey.substring(originalKey.length - 30)}`);
+        
+        // If we have escaped \n after JSON.parse, something is wrong with the JSON
+        // This shouldn't happen, but handle it just in case
+        if (escapedNewlines > 0 && actualNewlines === 0) {
+          console.log('🔧 Converting escaped \\n to actual newlines');
+          serviceAccount.private_key = originalKey.replace(/\\n/g, '\n');
+        }
+        
+        // Verify the key has the correct format
+        if (!serviceAccount.private_key.includes('\n')) {
+          console.error('❌ Private key has no newlines - this will fail!');
+          console.error('   The private key must have actual line breaks.');
+        } else if (!serviceAccount.private_key.startsWith('-----BEGIN PRIVATE KEY-----')) {
+          console.error('❌ Private key does not start with BEGIN marker');
+        } else if (!serviceAccount.private_key.includes('-----END PRIVATE KEY-----')) {
+          console.error('❌ Private key does not have END marker');
+        } else {
+          console.log('✅ Private key format looks correct');
+        }
       }
       
       console.log('✅ Firebase credentials loaded from environment variable');
