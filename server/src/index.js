@@ -2,7 +2,6 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import interviewRoutes from './routes/interview.js';
-import { db } from './config/firebase.js';
 
 dotenv.config();
 
@@ -60,25 +59,6 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Internal server error' });
 });
 
-// Test Firebase connection on startup
-async function testFirebaseConnection() {
-  try {
-    console.log('🔍 Testing Firebase connection...');
-    // Try to access Firestore
-    const testRef = db.collection('_connection_test').doc('test');
-    await testRef.set({ timestamp: new Date(), test: true });
-    await testRef.delete();
-    console.log('✅ Firebase connection test successful!\n');
-  } catch (error) {
-    console.error('❌ Firebase connection test FAILED:', error.message);
-    console.error('   Error code:', error.code);
-    console.error('   This means Firebase credentials are loaded but authentication is failing.');
-    console.error('   Please check that your service account has proper permissions.\n');
-  }
-}
-
-app.listen(PORT, async () => {
+app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
-  // Test Firebase after server starts
-  await testFirebaseConnection();
 });
