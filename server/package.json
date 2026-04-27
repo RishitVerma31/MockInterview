@@ -7,7 +7,8 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "minify-firebase": "node scripts/minify-service-account.js"
+    "minify-firebase": "node scripts/minify-service-account.js",
+    "extract-credentials": "node scripts/extract-credentials.js"
   },
   "dependencies": {
     "@google/generative-ai": "^0.21.0",

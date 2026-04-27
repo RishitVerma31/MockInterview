@@ -30,29 +30,42 @@ function loadFirebaseCredentials() {
         jsonString = jsonString.slice(1, -1);
       }
       
-      // Unescape newlines if they were escaped
-      jsonString = jsonString.replace(/\\n/g, '\n');
-      jsonString = jsonString.replace(/\\"/g, '"');
-      
+      // Parse the JSON first
       serviceAccount = JSON.parse(jsonString);
+      
+      // CRITICAL: Convert escaped \n in private_key to actual newlines
+      // The JSON is valid but Firebase needs actual newline characters
+      if (serviceAccount.private_key && typeof serviceAccount.private_key === 'string') {
+        // Replace literal \n strings with actual newline characters
+        serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
+      }
+      
       console.log('✅ Firebase credentials loaded from environment variable');
       return true;
     } catch (error) {
       console.warn('⚠️  Failed to parse FIREBASE_SERVICE_ACCOUNT_JSON:', error.message);
+      console.warn('   JSON preview:', process.env.FIREBASE_SERVICE_ACCOUNT_JSON?.substring(0, 100) + '...');
       // Continue to next method
     }
   }
 
-  // Method 2: Try individual environment variables
+  // Method 2: Try individual environment variables (PREFERRED FOR RENDER)
   if (process.env.FIREBASE_PROJECT_ID && 
       process.env.FIREBASE_PRIVATE_KEY && 
       process.env.FIREBASE_CLIENT_EMAIL) {
     try {
       credentialSource = 'individual environment variables';
+      let privateKey = process.env.FIREBASE_PRIVATE_KEY;
+      
+      // Ensure private key has proper newlines
+      if (!privateKey.includes('\n')) {
+        privateKey = privateKey.replace(/\\n/g, '\n');
+      }
+      
       serviceAccount = {
         type: 'service_account',
         project_id: process.env.FIREBASE_PROJECT_ID,
-        private_key: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+        private_key: privateKey,
         client_email: process.env.FIREBASE_CLIENT_EMAIL,
       };
       console.log('✅ Firebase credentials loaded from individual env vars');
@@ -60,6 +73,39 @@ function loadFirebaseCredentials() {
     } catch (error) {
       console.warn('⚠️  Failed to load from individual env vars:', error.message);
       // Continue to next method
+    }
+  }
+
+  // Method 2b: Try to extract from malformed FIREBASE_SERVICE_ACCOUNT_JSON
+  if (process.env.FIREBASE_SERVICE_ACCOUNT_JSON) {
+    try {
+      console.log('🔄 Attempting to extract credentials from malformed JSON...');
+      const rawString = process.env.FIREBASE_SERVICE_ACCOUNT_JSON;
+      
+      // Extract fields using regex (more forgiving than JSON.parse)
+      const projectIdMatch = rawString.match(/"project_id"\s*:\s*"([^"]+)"/);
+      const clientEmailMatch = rawString.match(/"client_email"\s*:\s*"([^"]+)"/);
+      const privateKeyMatch = rawString.match(/"private_key"\s*:\s*"(-----BEGIN PRIVATE KEY-----[^"]*-----END PRIVATE KEY-----[^"]*)"/s);
+      
+      if (projectIdMatch && clientEmailMatch && privateKeyMatch) {
+        credentialSource = 'extracted from malformed JSON';
+        let privateKey = privateKeyMatch[1];
+        
+        // Fix escaped newlines
+        privateKey = privateKey.replace(/\\n/g, '\n');
+        
+        serviceAccount = {
+          type: 'service_account',
+          project_id: projectIdMatch[1],
+          private_key: privateKey,
+          client_email: clientEmailMatch[1],
+        };
+        
+        console.log('✅ Successfully extracted credentials from malformed JSON');
+        return true;
+      }
+    } catch (error) {
+      console.warn('⚠️  Failed to extract from malformed JSON:', error.message);
     }
   }
 
