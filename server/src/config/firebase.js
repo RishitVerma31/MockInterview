@@ -13,7 +13,7 @@ if (process.env.FIREBASE_SERVICE_ACCOUNT_JSON) {
   serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_JSON);
 } else {
   // Local dev: read from file
-  serviceAccount = require(path.join(__dirname, '../../mockinterviewfirebsdk.json'));
+  serviceAccount = require(path.join(__dirname, '../../interviewsdk.json'));
 }
 
 if (!admin.apps.length) {

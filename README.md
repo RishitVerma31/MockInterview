@@ -114,7 +114,7 @@ VITE_FIREBASE_APP_ID=your_app_id
 VITE_API_URL=http://localhost:3001
 ```
 
-Place your Firebase service account JSON file at `server/mockinterviewfirebsdk.json`.
+Place your Firebase service account JSON file at `server/interviewsdk.json`.
 
 ### 4. Firebase setup
 
@@ -152,7 +152,7 @@ Open [http://localhost:5173](http://localhost:5173)
 |---|---|
 | `GROQ_API_KEY` | Your Groq API key |
 | `CLIENT_URL` | Your Vercel URL (e.g. `https://your-app.vercel.app`) |
-| `FIREBASE_SERVICE_ACCOUNT_JSON` | Contents of `mockinterviewfirebsdk.json` as a single-line JSON string |
+| `FIREBASE_SERVICE_ACCOUNT_JSON` | Contents of `interviewsdk.json` as a single-line JSON string |
 | `PORT` | `10000` |
 
 ### Client → Vercel

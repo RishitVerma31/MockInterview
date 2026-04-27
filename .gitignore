@@ -4,5 +4,7 @@ dist/
 .DS_Store
 *.log
 
-# Firebase service account — add this manually on Render
+# Firebase service account keys — NEVER COMMIT THESE
 server/mockinterviewfirebsdk.json
+server/interviewsdk.json
+**/*firebase*sdk*.json
