@@ -1,12 +1,12 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg: #03030a;
-  --bg2: #080812;
-  --bg3: #0e0e1c;
-  --glass: rgba(255,255,255,0.03);
-  --glass-b: rgba(255,255,255,0.07);
-  --glass-h: rgba(255,255,255,0.06);
+  --bg: #0a0a0f;
+  --bg2: #12121a;
+  --bg3: #1a1a28;
+  --glass: rgba(255,255,255,0.04);
+  --glass-b: rgba(255,255,255,0.1);
+  --glass-h: rgba(255,255,255,0.08);
   --accent: #7c6af7;
   --accent2: #a78bfa;
   --accent3: #c4b5fd;
@@ -16,11 +16,11 @@
   --orange: #fb923c;
   --red: #f87171;
   --pink: #f472b6;
-  --text: #f0f0fa;
-  --text2: #9090b8;
-  --text3: #50507a;
-  --border: rgba(255,255,255,0.06);
-  --border2: rgba(255,255,255,0.1);
+  --text: #ffffff;
+  --text2: #b4b4c8;
+  --text3: #7a7a94;
+  --border: rgba(255,255,255,0.08);
+  --border2: rgba(255,255,255,0.12);
   --r: 14px; --r2: 20px; --r3: 28px;
 }
 

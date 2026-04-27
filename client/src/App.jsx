@@ -9,8 +9,6 @@ import InterviewReport from './pages/InterviewReport';
 import History from './pages/History';
 import Navbar from './components/Navbar';
 import AnimatedBg from './components/AnimatedBg';
-import GlowCursor from './components/GlowCursor';
-import FloatingShapes from './components/FloatingShapes';
 
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useAuth();
@@ -31,8 +29,6 @@ const AppRoutes = () => {
   return (
     <BrowserRouter>
       <AnimatedBg />
-      <FloatingShapes />
-      <GlowCursor />
       {user && <Navbar />}
       <div style={{ position: 'relative', zIndex: 1, flex: 1, display: 'flex', flexDirection: 'column' }}>
         <Routes>
